@@ -13,7 +13,7 @@ app = FastAPI()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("events-service")
 
-KAFKA_BROKERS = os.environ.get("KAFKA_BROKERS", "localhost:9092").split(",")
+KAFKA_BROKERS = os.environ.get("KAFKA_BROKERS", "kafka:9092").split(",")
 TOPICS = ["movie-events", "user-events", "payment-events"]
 PORT = int(os.environ.get("PORT", 8082))
 

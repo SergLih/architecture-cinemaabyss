@@ -47,6 +47,10 @@ def handle_movies():
             target = MONOLITH_URL
     return proxy_request(target)
 
+@app.route('/api/proxy/health', methods=['GET'])
+def proxy_health():
+    return "OK", 200
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
