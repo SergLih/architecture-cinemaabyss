@@ -279,12 +279,12 @@ cat .docker/config.json | base64
   Откройте логи event-service и сделайте скриншот обработки событий
 
 ![Результаты тестов](task3/ks8_tests.png)
-![Логи events-service](events_service_logs.png)
+![Логи events-service](task3/events_service_logs.png)
 
 #### Шаг 3
 Добавьте сюда скриншота вывода при вызове https://cinemaabyss.example.com/api/movies и  скриншот вывода event-service после вызова тестов.
 
-![Вывод при вызове вышеуказанного url](api_movies_get.png)
+![Вывод при вызове вышеуказанного url](task3/api_movies_get.png)
 
 
 # Задание 4
@@ -360,6 +360,10 @@ minikube tunnel
 Потом вызовите 
 https://cinemaabyss.example.com/api/movies
 и приложите скриншот развертывания helm и вывода https://cinemaabyss.example.com/api/movies
+
+![Развёртывание Helm](task4/helm_info.png)
+![Поды k8s](task4/helm_k8s_pods.png)
+![Вывод при вызове вышеуказанного url](task4/helm_movies.png)
 
 ## Удаляем все
 
