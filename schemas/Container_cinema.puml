@@ -1,0 +1,75 @@
+@startuml
+!include <C4/C4_Container>
+
+title Диаграмма контейнеров системы «Кинобездна»
+
+Person(User, "Пользователь", "Пользователь системы «Кинобездна»")
+
+System_Ext("PaymentSystem", "Платёжная система", "Обработка платежей пользователей")
+System_Ext("MovieSystem", "Онлайн-кинотеатры", "Предоставление видеоконтента пользователям")
+
+System_Boundary(CinemaAbyss, "Система «Кинобездна»") {
+    Container(WebApp, "Web Application", "React", "Web-приложение")
+    Container(MobileApp, "Mobile Application", "React", "Мобильное приложение")
+    Container(SmartTVApp, "Smart TV Application", "Android", "Приложение Smart TV")
+
+    Container(BFFWebApp, "BFF Web Application", "Go", "Бэкенд для фронтенда Web-приложения")
+    Container(BFFMobileApp, "BFF Mobile Application", "Go", "Бэкенд для фронтенда мобильного приложения")
+    Container(BFFSmartTVApp, "BFF Smart TV Application", "Go", "Бэкенд для фронтенда приложения Smart TV")
+
+    Container(APIGateway, "API Gateway System", "Kong", "Шлюз API для сервисов")
+
+    System_Boundary(UserServiceBound, "User Service") {
+        Container(UserService, "Пользовательский сервис", "Python")
+        ContainerDb(user_db, "User DB", "PostgresSQL", "БД о пользователях")
+        BiRel(UserService, user_db, "CRUD-операции с данными о пользователях", "SQL")
+    }
+
+    System_Boundary(SubscriptionServiceBound, "Subscription Service") {
+        Container(SubscriptionService, "Подписочный сервис", "Python")
+        ContainerDb(SubscriptionDB, "Subscription DB", "PostgresSQL", "БД о подписках")
+        BiRel(SubscriptionService, SubscriptionDB, "CRUD-операции с данными о подписках", "SQL")
+    }
+
+    System_Boundary(PaymentServiceBound, "Payment Service") {
+        Container(PaymentService, "Платежный сервис", "Python")
+        ContainerDb(PaymentDB, "Payment DB", "PostgresSQL", "БД о платежах")
+        BiRel(PaymentService, PaymentDB, "CRUD-операции с данными о платежах", "SQL")
+    }
+
+    System_Boundary(MovieServiceBound, "Movie Service") {
+        Container(MovieService, "Сервис фильма", "Python")
+        ContainerDb(MovieDB, "Movies DB", "PostgresSQL", "БД о фильмах (метаданные)")
+        BiRel(MovieService, MovieDB, "CRUD-операции с метаданными фильмов", "SQL")
+    }
+
+    Container(MessageBroker, "Брокер сообщений", "Apache Kafka")
+}
+
+Rel(User, WebApp, "HTTP запросы", "REST API")
+Rel(User, MobileApp, "HTTP запросы", "REST API")
+Rel(User, SmartTVApp, "HTTP запросы", "REST API")
+
+Rel(WebApp, BFFWebApp, "Вызов API бэкенда")
+Rel(MobileApp, BFFMobileApp, "Вызов API бэкенда")
+Rel(SmartTVApp, BFFSmartTVApp, "Вызов API бэкенда")
+
+Rel(BFFWebApp, APIGateway, "API запросы", "REST API")
+Rel(BFFMobileApp, APIGateway, "API запросы", "REST API")
+Rel(BFFSmartTVApp, APIGateway, "API запросы", "REST API")
+
+Rel(APIGateway, UserService, "Управление пользователями", "REST API")
+Rel(APIGateway, PaymentService, "Управление платежами", "REST API")
+Rel(APIGateway, SubscriptionService, "Управление подписками", "REST API")
+Rel(APIGateway, MovieService, "Операции с фильмами", "REST API")
+
+Rel(UserService, MessageBroker, "События пользователей", "Kafka")
+Rel(PaymentService, MessageBroker, "События платежей", "Kafka")
+Rel(MovieService, MessageBroker, "События фильмов", "Kafka")
+Rel(SubscriptionService, MessageBroker, "События подписок", "Kafka")
+
+Rel(PaymentService, PaymentSystem, "Обработка платежей", "REST API")
+Rel(RecommendationService, RecommendationSystem, "Получение рекомендаций", "REST API")
+Rel(MovieService, MovieSystem, "Стриминг фильмов", "MPEG-DASH")
+
+@enduml

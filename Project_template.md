@@ -5,7 +5,7 @@
 1. Спроектируйте to be архитектуру КиноБездны, разделив всю систему на отдельные домены и организовав интеграционное взаимодействие и единую точку вызова сервисов.
 Результат представьте в виде контейнерной диаграммы в нотации С4.
 Добавьте ссылку на файл в этот шаблон
-[ссылка на файл](ссылка)
+[Диаграмма контейнеров](schemas/Container_cinema.puml)
 
 # Задание 2
 
@@ -58,6 +58,12 @@
 
 Необходимые тесты для проверки этого API вызываются при запуске npm run test:local из папки tests/postman 
 Приложите скриншот тестов и скриншот состояния топиков Kafka из UI http://localhost:8090 
+
+![Результаты тестов](task2/tests_result.png)
+![Топики (Kafka)](task2/topics.png)
+![Пользователи (Kafka)](task2/user_events.png)
+![Платежи (Kafka)](task2/payment_events.png)
+![Фильмы (Kafka)](task2/movie_events.png)
 
 # Задание 3
 
@@ -272,8 +278,13 @@ cat .docker/config.json | base64
   Часть тестов с health-чек упадет, но создание событий отработает.
   Откройте логи event-service и сделайте скриншот обработки событий
 
+![Результаты тестов](task3/ks8_tests.png)
+![Логи events-service](task3/events_service_logs.png)
+
 #### Шаг 3
 Добавьте сюда скриншота вывода при вызове https://cinemaabyss.example.com/api/movies и  скриншот вывода event-service после вызова тестов.
+
+![Вывод при вызове вышеуказанного url](task3/api_movies_get.png)
 
 
 # Задание 4
@@ -349,6 +360,11 @@ minikube tunnel
 Потом вызовите 
 https://cinemaabyss.example.com/api/movies
 и приложите скриншот развертывания helm и вывода https://cinemaabyss.example.com/api/movies
+
+![Развёртывание Helm](task4/helm_info.png)
+![Поды k8s](task4/helm_k8s_pods.png)
+![Вывод при вызове вышеуказанного url](task4/helm_movies.png)
+![Результаты тестов](task4/helm_res_tests.png)
 
 ## Удаляем все
 
