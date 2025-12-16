@@ -65,7 +65,7 @@ proxyService:
       cpu: 100m
       memory: 128Mi
   service:
-    port: 80
+    port: 8000
     targetPort: 8000
     type: ClusterIP
 
@@ -169,14 +169,22 @@ ingress:
   hosts:
     - host: cinemaabyss.example.com
       paths:
-        - path: /
+        - path: /api/proxy
           pathType: Prefix
           service: proxy-service
-          port: 80
+          port: 8000
         - path: /api/events
           pathType: Prefix
           service: events-service
           port: 8082
+        - path: /
+          pathType: Prefix
+          service: monolith
+          port: 8080
+        - path: /api/movies
+          pathType: Prefix
+          service: movies-service
+          port: 8081          
 
 # Application configuration
 config:

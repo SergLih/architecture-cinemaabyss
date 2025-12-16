@@ -364,6 +364,7 @@ https://cinemaabyss.example.com/api/movies
 ![Развёртывание Helm](task4/helm_info.png)
 ![Поды k8s](task4/helm_k8s_pods.png)
 ![Вывод при вызове вышеуказанного url](task4/helm_movies.png)
+![Результаты тестов](task4/helm_res_tests.png)
 
 ## Удаляем все
 
